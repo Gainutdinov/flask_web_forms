@@ -3,7 +3,7 @@ from flask_wtf import FlaskForm, RecaptchaField
 from flask_wtf.file import FileAllowed, FileRequired
 from wtforms import FileField, StringField, TextAreaField, SubmitField, SelectField, DecimalField
 from wtforms.validators import InputRequired, DataRequired, Length, ValidationError
-from werkzeug.utils import secure_filename, escape, unescape
+from werkzeug.utils import secure_filename
 import pdb
 import sqlite3
 import os
@@ -18,8 +18,8 @@ app.config["ALLOWED_IMAGE_EXTENSIONS"] = ["jpeg", "jpg", "png"]
 app.config["MAX_CONTENT_LENGTH"] = 16 * 1024 * 1024
 app.config["IMAGE_UPLOADS"] = os.path.join(basedir, "uploads")
 
-app.config["RECAPTCHA_PUBLIC_KEY"] = "6LftyNMUAAAAANHsGBeDjOxqGbIE1sdahNHU2GYv"
-app.config["RECAPTCHA_PRIVATE_KEY"] = "6LftyNMUAAAAAJ1ZGq-NHzvf_4YU8VOeaXmg3-fe"
+app.config["RECAPTCHA_PUBLIC_KEY"] = "6Lf_LP4UAAAAAPGj3yyz2AsAwzZqBZPA4fHBDHyV"
+app.config["RECAPTCHA_PRIVATE_KEY"] = "6Lf_LP4UAAAAABnOq-pxZRvk8bvkD27FT1_uy0RG"
 
 class ItemForm(FlaskForm):
     title       = StringField("Title", validators=[InputRequired("Input is required!"), DataRequired("Data is required!"), Length(min=5, max=20, message="Input must be between 5 and 20 characters long")])
@@ -115,8 +115,8 @@ def edit_item(item_id):
             title = ?, description = ?, price = ?, image = ?
             WHERE id = ?""",
                 (
-                    escape(form.title.data),
-                    escape(form.description.data),
+                    form.title.data,
+                    form.description.data,
                     float(form.price.data),
                     filename,
                     item_id
@@ -128,7 +128,7 @@ def edit_item(item_id):
             return redirect(url_for("item", item_id=item_id))
 
         form.title.data       = item["title"]
-        form.description.data = unescape(item["description"])
+        form.description.data = item["description"]
         form.price.data       = item["price"]
 
         if form.errors:
@@ -227,7 +227,7 @@ def home():
 
         if form.title.data.strip():
             filter_queries.append("i.title LIKE ?")
-            parameters.append("%" + escape(form.title.data) + "%")
+            parameters.append("%" + form.title.data + "%")
 
         if form.category.data:
             filter_queries.append("i.category_id = ?")
@@ -299,8 +299,8 @@ def new_item():
                     (title, description, price, image, category_id, subcategory_id)
                     VALUES(?,?,?,?,?,?)""",
                     (
-                        escape(form.title.data),
-                        escape(form.description.data),
+                        form.title.data,
+                        form.description.data,
                         float(form.price.data),
                         filename,
                         form.category.data,
