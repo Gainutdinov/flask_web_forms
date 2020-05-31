@@ -18,8 +18,8 @@ app.config["ALLOWED_IMAGE_EXTENSIONS"] = ["jpeg", "jpg", "png"]
 app.config["MAX_CONTENT_LENGTH"] = 16 * 1024 * 1024
 app.config["IMAGE_UPLOADS"] = os.path.join(basedir, "uploads")
 
-app.config["RECAPTCHA_PUBLIC_KEY"] = "6Lf_LP4UAAAAAPGj3yyz2AsAwzZqBZPA4fHBDHyV"
-app.config["RECAPTCHA_PRIVATE_KEY"] = "6Lf_LP4UAAAAABnOq-pxZRvk8bvkD27FT1_uy0RG"
+app.config["RECAPTCHA_PUBLIC_KEY"] = "YOUR_API"
+app.config["RECAPTCHA_PRIVATE_KEY"] = "YOUR_API"
 
 class ItemForm(FlaskForm):
     title       = StringField("Title", validators=[InputRequired("Input is required!"), DataRequired("Data is required!"), Length(min=5, max=20, message="Input must be between 5 and 20 characters long")])
