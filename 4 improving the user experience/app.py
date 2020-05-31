@@ -22,8 +22,8 @@ app.config["IMAGE_UPLOADS"] = os.path.join(basedir, "uploads")
 
 app.config["TESTING"] = True
 
-app.config["RECAPTCHA_PUBLIC_KEY"] = "6LftyNMUAAAAANHsGBeDjOxqGbIE1sdahNHU2GYv"
-app.config["RECAPTCHA_PRIVATE_KEY"] = "6LftyNMUAAAAAJ1ZGq-NHzvf_4YU8VOeaXmg3-fe"
+app.config["RECAPTCHA_PUBLIC_KEY"] = "YOUR_API"
+app.config["RECAPTCHA_PRIVATE_KEY"] = "YOUR_API"
 
 class PriceInput(Input):
     input_type = "number"
